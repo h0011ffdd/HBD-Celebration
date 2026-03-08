@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birth Day__Error Detected(main)</title>
+    <title>Happy Birthday to GR__ error(main)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@700&family=Cinzel:wght@700&family=Inter:wght@300;500&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
-        :root { --gold: #b8860b; --navy: #000080; --bg: #fafafa; }
+        html, body { 
+            height: 100%; 
+            width: 100%; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; 
+        }
         
         body { 
             font-family: 'Quicksand', sans-serif; background: var(--bg); 
@@ -90,8 +96,8 @@
         .deco-item {
             position: fixed;
             pointer-events: none;
-            opacity: 0.18;
-            z-index: 0;
+            opacity: 0.4;
+            z-index: 1;
             font-size: 2.5rem;
             animation: float 18s linear infinite;
         }
@@ -205,8 +211,8 @@
                     <span class="text-3xl">✨</span>
                     <span class="text-3xl">💖</span>
                 </div>
-                <h3 class="mb-4">A Beautiful Life Note</h3>
-                <p class="mb-4">May your journey ahead be filled with wisdom, joy, and endless blessings. You are loved, celebrated, and destined for greatness!</p>
+                <h3 class="mb-4">A Beautiful Life Voice.</h3>
+                <p class="mb-4">Byeeeee....... meri room mates aaai hui, un sy gheee ka hisaab lena hy🤞</p>
                 <p class="text-sm text-slate-600 italic">With all my heart, on your special day.</p>
                 <button onclick="closeNote()" class="mt-6 px-4 py-2 bg-amber-600 text-white rounded-full text-sm hover:bg-amber-700 transition">Close</button>
             </div>
@@ -234,7 +240,7 @@
         </div>
         <div class="text-center cursor-pointer" onclick="openGift('advice')">
             <div class="text-6xl animate-bounce">📜</div>
-            <p class="text-[9px] font-bold text-blue-700 uppercase mt-2">Advice</p>
+            <p class="text-[9px] font-bold text-blue-700 uppercase mt-2">Voice</p>
         </div>
     </div>
 
@@ -242,14 +248,26 @@
     <audio id="blow-sfx" src="https://www.soundjay.com/misc/sounds/blow02.wav"></audio>
 
     <script>
-        const bday = new Date("March 8, 2025 06:55:00").getTime();
+        // Ensure full screen on load
+        window.addEventListener('load', () => {
+            // For mobile browsers, attempt to hide address bar
+            if (window.innerHeight < window.innerWidth) {
+                // Landscape, do nothing
+            } else {
+                setTimeout(() => {
+                    window.scrollTo(0, 1);
+                }, 100);
+            }
+        });
+        
+        const bday = new Date("March 11, 2026 12:59:59").getTime();
         let pops = 0;
         let flamesOut = 0;
         let typing = false;
 
         const timerCheck = setInterval(() => {
             const now = Date.now();
-            const lastBday = new Date("March 8, 2025 06:55:00").getTime();
+            const lastBday = new Date("March 11, 2025 12:59:59").getTime();
             const progress = Math.min((now - lastBday) / (bday - lastBday), 1);
             document.getElementById('age-bar').style.width = progress * 100 + '%';
             // Update countdown
@@ -263,12 +281,16 @@
                 document.getElementById('cd-hours').innerText = h;
                 document.getElementById('cd-mins').innerText = m;
                 document.getElementById('cd-secs').innerText = s;
+            } else {
+                document.getElementById('cd-days').innerText = '00';
+                document.getElementById('cd-hours').innerText = '00';
+                document.getElementById('cd-mins').innerText = '00';
+                document.getElementById('cd-secs').innerText = '00';
             }
             if (now >= bday) {
                 document.getElementById('digit-flip').classList.add('active');
                 const btn = document.getElementById('unlock');
                 btn.innerText = "ENTER CELEBRATION"; btn.classList.remove('opacity-30', 'pointer-events-none');
-                clearInterval(timerCheck);
             }
         }, 1000);
 
@@ -279,11 +301,18 @@
                 document.getElementById('main-nav').style.display = 'grid';
                 spawnBalloons();
                 startSlider();
+                spawnBackgroundDecor();
                 // Start mini timer
                 const miniInterval = setInterval(() => {
                     const now = new Date().getTime();
                     const distance = bday - now;
-                    if(distance < 0) { clearInterval(miniInterval); return; }
+                    if(distance < 0) { 
+                        document.getElementById("mini-days").innerText = '00';
+                        document.getElementById("mini-hours").innerText = '00';
+                        document.getElementById("mini-mins").innerText = '00';
+                        clearInterval(miniInterval); 
+                        return; 
+                    }
                     const d = Math.floor(distance / (1000 * 60 * 60 * 24));
                     const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -308,7 +337,6 @@
             if(id === 'gifts') for(let i=0; i<3; i++) setTimeout(() => spawnFloatingEmoji('🦋', 'gifts'), i*2000);
             if(id === 'cake') for(let i=0; i<3; i++) setTimeout(() => spawnFloatingEmoji('🎂', 'cake'), i*2000);
             if(id === 'memories') for(let i=0; i<3; i++) setTimeout(() => spawnFloatingEmoji('💖', 'memories'), i*2000);
-            spawnBackgroundDecor();
         }
 
         function blow(el) {
@@ -330,6 +358,8 @@
                 const cake = document.querySelector('.cake-display').getBoundingClientRect();
                 createSparks(cake.left + (cake.width/2), cake.top + 50, 40);
                 // Big fire from bottom to top
+                createBigFire();
+                createBigFire();
                 createBigFire();
             }
         }
@@ -423,7 +453,7 @@
                 document.getElementById('pop-sfx').play();
                 document.getElementById('blow-sfx').currentTime = 0;
                 document.getElementById('blow-sfx').play();
-                spawnWish(e.clientX, e.clientY);
+                // spawnWish(e.clientX, e.clientY);
                 wrap.remove();
                 pops++;
                 document.getElementById('bar').style.width = (Math.min(pops, 8)/8)*100 + '%';
@@ -442,10 +472,10 @@
             m.style.display = 'flex';
             setTimeout(() => m.style.opacity = '1', 10);
             document.getElementById('g-icon').innerText = mode === 'wish' ? '🎁' : '📜';
-            document.getElementById('g-title').innerText = mode === 'wish' ? '19th Birthday Wish' : 'Life Advice';
+            document.getElementById('g-title').innerText = mode === 'wish' ? '19th Birthday Wish' : 'Life Voice';
             const msg = mode === 'wish' 
-                ? "Happy 19th Birthday! May your year be filled with success at BZU, deep happiness, and moments as sweet as this cake."
-                : "At 19, your potential is limitless. Focus on your growth, be kind to yourself, and chase what makes your soul happy.";
+                ? "Happy Birthday!  an open library, leading to unnecessary laughter on the reflection of character."
+                : "May you be succeed in getting your brain back which you had thrown away in your whole ninetees.";
             let i = 0; document.getElementById('g-text').innerHTML = ""; typing = true;
             function type() {
                 if(i < msg.length) { document.getElementById('g-text').innerHTML += msg.charAt(i); i++; setTimeout(type, 35); }
@@ -486,7 +516,9 @@
         function spawnWish(x, y) {
             const w = document.createElement('div');
             w.className = 'wish-text';
-            w.innerText = ["GYAANI AMMA", "STRONG LADY", "AYeshuuuuuu", "GRrrrrr", "AWAN", "JOY"][Math.floor(Math.random()*4)];
+            const texts = ["GYAANI AMMA", "STRONG LADY", "AYeshuuuuuu", "GRrrrrr", "AWAN", "JOY"];
+            const text = texts[Math.floor(Math.random() * texts.length)];
+            w.innerHTML = `<span translate="no">${text}</span>`;
             w.style.left = x + 'px'; w.style.top = y + 'px';
             document.body.appendChild(w);
             setTimeout(() => w.remove(), 2000);
@@ -518,7 +550,7 @@
                     deco.style.left = Math.random()*100 + 'vw';
                     deco.style.top = Math.random()*100 + 'vh';
                     deco.style.fontSize = (16+Math.random()*8)+'px';
-                    deco.style.opacity = 0.3+Math.random()*0.5;
+                    deco.style.opacity = 0.5+Math.random()*0.3;
                     document.body.appendChild(deco);
                 }, i*150);
             }
@@ -527,5 +559,4 @@
     window.addEventListener('resize', spawnBackgroundDecor);
     </script>
 </body>
-
 </html>
